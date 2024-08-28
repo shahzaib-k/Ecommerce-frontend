@@ -19,7 +19,7 @@ const ProductDetail = () => {
 
     const getProducts = async () => {
       try {
-        const res = await axios.get(`${BASE_URL}/products/get-products`)
+        const res = await axios.get(`${BASE_URL}/products/get-products`, { withCredentials: true })
         setData(res?.data?.product?.filter( item => item._id === params.id)  || [])
       } catch (error) {
         console.error("Error fetching products:", error);

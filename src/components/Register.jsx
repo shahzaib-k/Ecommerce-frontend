@@ -19,7 +19,7 @@ const Register = () => {
    const register = async (e) => {
       e.preventDefault()
       try {
-         const res= await axios.post(`${BASE_URL}/auth/register`, {name, email, password})
+         const res= await axios.post(`${BASE_URL}/auth/register`, {name, email, password}, { withCredentials: true })
          if(res.status == "201"){
             toast.success("Registration Successful")
             navigate("/login")

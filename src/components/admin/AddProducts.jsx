@@ -42,7 +42,7 @@ const AddProducts = () => {
             formData.append('quantity', quantity)
             formData.append('color', color)
 
-            const res = await axios.post(`${BASE_URL}/products/upload`, formData, {
+            const res = await axios.post(`${BASE_URL}/products/upload`, formData, { withCredentials: true }, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }

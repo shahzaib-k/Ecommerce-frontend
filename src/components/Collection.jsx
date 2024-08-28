@@ -10,7 +10,7 @@ const Collection = () => {
 
     const getProducts = async () => {
         try {
-            const res = await axios.get(`${BASE_URL}/products/get-products`)
+            const res = await axios.get(`${BASE_URL}/products/get-products`, { withCredentials: true })
             setData(res?.data?.product || [])
           
         } catch (error) {
