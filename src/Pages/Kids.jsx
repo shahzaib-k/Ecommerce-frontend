@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react'
+import banner_kids from "../assets/banner_kids.png"
 import Nav from '../components/Nav'
 import axios from 'axios'
 import ProductCard from '../components/ProductCard'
@@ -8,9 +9,11 @@ const Kids = () => {
 
   const [data, setData] = useState([])
 
+  const BASE_URL =  import.meta.env.VITE_BASE_URL 
+
     const getProducts = async () => {
         try {
-            const res = await axios.get("http://localhost:3000/products/get-products")
+            const res = await axios.get(`${BASE_URL}/products/get-products`)
             setData(res?.data?.product || [])
           
         } catch (error) {
@@ -30,10 +33,14 @@ const Kids = () => {
 
   return (
     <>
-      <main className=' w-full min-h-screen bg-[#313131] bg-[radial-gradient(rgba(255,255,255,0.171)_2px,transparent_0)] bg-[length:10px_10px] bg-[-5px_-5px]' >
+      <main className=' w-full min-h-screen bg-[#F5F7F8]' >
       <Nav/>
 
-      <section className='flex flex-wrap justify-center gap-6 w-full min-h-screen pt-40 px-10 pb-10'>
+      <section className='w-full flex justify-center pt-20' >
+        <img src={banner_kids} className='w-[90%] h-28 md:h-48 md: md:w-[70%]' />
+      </section>
+
+      <section className='flex flex-wrap justify-center gap-6 w-full min-h-screen pt-16 px-10 pb-10'>
             {
               data.filter((items) => (items.category === "kids")).map((items) => (
                 <div key={items._id} >

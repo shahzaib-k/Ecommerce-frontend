@@ -2,15 +2,12 @@ import React, { useState } from "react";
 import portraitimage from "../assets/portraitimage.jpeg"
 import kidsimg from "../assets/kidsimg.jpeg"
 import womenimage from "../assets/womenimage.jpeg"
-import { useCookies } from "react-cookie";
 import Nav from "./Nav"
 
 import { Link } from 'react-router-dom'
 
 const Header = () => {
-  
-  const [cookie, setCookie] = useCookies("")
-  
+    
   return (
     <>
       <main className="w-full min-h-screen relative flex flex-col md:flex-row overflow-x-hidden">

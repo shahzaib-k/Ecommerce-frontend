@@ -6,9 +6,11 @@ const Collection = () => {
 
   const [data, setData] = useState([])
 
+  const BASE_URL =  import.meta.env.VITE_BASE_URL 
+
     const getProducts = async () => {
         try {
-            const res = await axios.get("http://localhost:3000/products/get-products")
+            const res = await axios.get(`${BASE_URL}/products/get-products`)
             setData(res?.data?.product || [])
           
         } catch (error) {
@@ -53,8 +55,8 @@ const Collection = () => {
 
       <section className='flex justify-center gap-11 px-[5%] sm:px-[8%] md:px-[12%] my-14 flex-wrap' >
         {
-            itemsToDisplay.map((items) => (
-                <div className='w-[80%] sm:w-[40%] md:w-[22%] flex justify-center ' >
+            itemsToDisplay.map((items, index) => (
+                <div key={index} className='w-[80%] sm:w-[40%] md:w-[22%] flex justify-center ' >
                     <img src={items.image} className='w-full h-96' />
                 </div>
             ))

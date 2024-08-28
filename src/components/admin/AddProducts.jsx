@@ -4,6 +4,7 @@ import axios from 'axios'
 import { Link, useNavigate } from 'react-router-dom'
 import { toast } from 'react-toastify'
 
+
 const AddProducts = () => {
     const [image, setImage] = useState(null)
     const [title, setTitle] = useState("")
@@ -13,6 +14,9 @@ const AddProducts = () => {
     const [price, setPrice] = useState(0)
     const [quantity, setQuantity] = useState(0)
     const [color, setColor] = useState('#000000')
+
+    const BASE_URL =  import.meta.env.VITE_BASE_URL 
+
 
     const navigate = useNavigate()
 
@@ -33,12 +37,12 @@ const AddProducts = () => {
             formData.append('title', title)
             formData.append('description', description)
             formData.append('category', category)
-            formData.append('size', JSON.stringify(size)) // Convert size array to string
+            formData.append('size', JSON.stringify(size)) 
             formData.append('price', price)
             formData.append('quantity', quantity)
             formData.append('color', color)
 
-            const res = await axios.post("http://localhost:3000/products/upload", formData, {
+            const res = await axios.post(`${BASE_URL}/products/upload`, formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }

@@ -13,12 +13,12 @@ const Navbar = () => {
   const [cartItems, setCartItems] = useState([]); 
   const [isOverlayVisible, setOverlayVisible] = useState(false);
   
-
+  const BASE_URL =  import.meta.env.VITE_BASE_URL 
   const navigate = useNavigate()
 
   const fetchUserCart = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/auth/verify-token", { withCredentials: true });
+      const res = await axios.get(`${BASE_URL}/auth/verify-token`, { withCredentials: true });
       setCartItems(res.data.user.cart); 
       setUser(res.data.user);
       

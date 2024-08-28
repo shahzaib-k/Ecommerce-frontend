@@ -5,21 +5,26 @@ import Navbar from './Navbar';
 import {toast } from 'react-toastify';
 import axios from 'axios';
 import { useCookies } from 'react-cookie';
-import Account from '../Pages/Account';
+
 
 const SignIn = () => {
 
     const [email, setEmail] = useState("");
     const [password, setPassowrd] = useState("");
-    
     const [cookie, setCookie, removeCookie] = useCookies("")
 
+    console.log(email, password);
+    
+    
+    
+    const BASE_URL =  import.meta.env.VITE_BASE_URL 
+    console.log(BASE_URL);
     const navigate = useNavigate();  
 
     const login = async (e) => {
       e.preventDefault();
       try {
-        const res = await axios.post("http://localhost:3000/auth/login", { email, password }, { withCredentials: true });     
+        const res = await axios.post(`${BASE_URL}/auth/login`, { email, password }, { withCredentials: true });     
         
         if(res.status == "200" ){
            toast.success("logged in successfully")
@@ -63,10 +68,6 @@ const SignIn = () => {
          
           </div>
 
-          <Link to="email" className="mt-1 cursor-pointer text-gray-600 hover:text-gray-950">
-            Forgot your Password?
-          </Link>
-
           <div className="flex justify-center">
             <input type="submit" value="Sign In"
               className="text-white cursor-pointer w-16 md:w-24 h-8 bg-black mt-8
@@ -90,7 +91,7 @@ const SignIn = () => {
       </section>
     }
 
-    <Account/>
+    {/* <Account/> */}
     
     </>
   )

@@ -13,12 +13,13 @@ const Register = () => {
    const [email, setEmail] = useState('')
    const [password, setPassword] = useState('')
 
+   const BASE_URL =  import.meta.env.VITE_BASE_URL 
    const navigate = useNavigate()
 
    const register = async (e) => {
       e.preventDefault()
       try {
-         const res= await axios.post("http://localhost:3000/auth/register", {name, email, password})
+         const res= await axios.post(`${BASE_URL}/auth/register`, {name, email, password})
          if(res.status == "201"){
             toast.success("Registration Successful")
             navigate("/login")

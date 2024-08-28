@@ -10,10 +10,10 @@ import { useCookies } from 'react-cookie';
 const AdimLogin = () => {
 
   const [email, setEmail] = useState("");
-    const [password, setPassowrd] = useState("");
-    
-    const [cookie, setCookie, removeCookie] = useCookies("")
+  const [password, setPassowrd] = useState("");
+  const [cookie, setCookie, removeCookie] = useCookies("")
 
+  const BASE_URL =  import.meta.env.VITE_BASE_URL 
     const navigate = useNavigate();
   
     console.log(cookie);
@@ -21,7 +21,7 @@ const AdimLogin = () => {
     const login = async (e) => {
       e.preventDefault();
       try {
-        const res = await axios.post("http://localhost:3000/admin/login", { email, password }, { withCredentials: true });     
+        const res = await axios.post(`${BASE_URL}/admin/login`, { email, password }, { withCredentials: true });     
         
         console.log(res);
 

@@ -7,9 +7,10 @@ const Orders = () => {
 
     const [data, setData] = useState([])
     
+    const BASE_URL =  import.meta.env.VITE_BASE_URL 
 
     const token = async () => {
-        const res = await axios.get('http://localhost:3000/auth/verify-token', {withCredentials: true})
+        const res = await axios.get(`${BASE_URL}/auth/verify-token`, {withCredentials: true})
          setData(res.data.user.purchaseProducts)         
       }
 
@@ -18,7 +19,7 @@ const Orders = () => {
       }, [])
 
       if (data.length == 0) {
-        return <Loader/>
+         <Loader/>
       }
 
   return (

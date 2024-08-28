@@ -8,9 +8,10 @@ const ProductCard = ({items}) => {
   
   const [hovered, setHovered] = useState(false);
   const [addedToCart, setAddedToCart] = useState(false);
-
   const [cookie, setCookie] = useCookies('')
   const [userId, setUserId] = useState('')
+
+  const BASE_URL =  import.meta.env.VITE_BASE_URL 
 
   const handleAnimation = () => {
     setAddedToCart(true);
@@ -21,13 +22,13 @@ const ProductCard = ({items}) => {
 
   
   const token = async () => {
-    const res = await axios.get('http://localhost:3000/auth/verify-token', {withCredentials: true})
+    const res = await axios.get(`${BASE_URL}/auth/verify-token`, {withCredentials: true})
     setUserId(res.data.user._id)
   }
   
 
   const handleAddToCart = async (id, title, color, image, size, price) => {
-      const res = await axios.post(`http://localhost:3000/products/add-to-cart/${userId}` , 
+      const res = await axios.post(`${BASE_URL}/products/add-to-cart/${userId}` , 
       {productId: id, quantity: 1, productImage: image.join(', '), productTitle: title, productPrice: price , 
        productSize: size.join(', ')[2] , color : color.join(', ') },
        {withCredentials: true})
@@ -64,7 +65,7 @@ const ProductCard = ({items}) => {
     { cookie.token && 
         <div onClick={() => {handleAnimation(); 
         handleAddToCart(items._id, items.title, items.color, items.image, items.size, items.price)}}
-        className={`absolute left-0 bottom-0 w-full z-[10] bg-green-500 text-white font-semibold uppercase text-center py-2 transition-opacity ${hovered ? 'opacity-100' : 'opacity-0'}`}>
+        className={`absolute left-0 bottom-0 w-full z-[50] bg-green-500 text-white font-semibold uppercase text-center py-2 transition-opacity ${hovered ? 'opacity-100' : 'opacity-0'}`}>
         {addedToCart ? 'Added to Cart' : 'Add to Cart'}
         </div>
         }

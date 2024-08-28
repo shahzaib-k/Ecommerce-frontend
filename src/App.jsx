@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import Home from "./Pages/Home";
@@ -9,7 +9,6 @@ import Men from "./Pages/Men";
 import Women from "./Pages/Women";
 import Kids from "./Pages/Kids";
 import Cart from "./components/Cart";
-import Email from "./components/Email";
 import Admin from "./Pages/admin/Admin";
 import AllProducts from "./Pages/AllProducts";
 import ProductDetail from "./Pages/ProductDetail";

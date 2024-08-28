@@ -15,10 +15,11 @@ const ProductDetail = () => {
     const [userId, setUserId] = useState('')
     const [cookie, setCookie] = useCookies('')
 
+    const BASE_URL =  import.meta.env.VITE_BASE_URL 
 
     const getProducts = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/products/get-products")
+        const res = await axios.get(`${BASE_URL}/products/get-products`)
         setData(res?.data?.product?.filter( item => item._id === params.id)  || [])
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -27,7 +28,7 @@ const ProductDetail = () => {
 
     const token = async () => {
 
-         const res = await axios.get('http://localhost:3000/auth/verify-token', {withCredentials: true})
+         const res = await axios.get(`${BASE_URL}/auth/verify-token`, {withCredentials: true})
         setUserId(res.data.user._id)
       }
 
@@ -36,7 +37,7 @@ const ProductDetail = () => {
         if(!cookie.token){
           return toast.error("Please Login first");
         }
-        const res = await axios.post(`http://localhost:3000/products/add-to-cart/${userId}` , 
+        const res = await axios.post(`${BASE_URL}/products/add-to-cart/${userId}` , 
         {productId: id, quantity: 1, productImage: image.join(', '), productTitle: title, productPrice: price , productSize: size.join(', ')[2] , color : color.join(', ') },
         {withCredentials: true})
   
@@ -51,7 +52,7 @@ const ProductDetail = () => {
     const handleDelete = async (id) => {
       try {
         
-        const res = await axios.delete(`http://localhost:3000/products/delete-product/${id}`, {withCredentials: true})
+        const res = await axios.delete(`${BASE_URL}/products/delete-product/${id}`, {withCredentials: true})
         alert("Product deleted successfully")
         navigate("/all-products")
       } catch (error) {

@@ -3,21 +3,18 @@ import Navbar from './Navbar';
 import { Link, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { RiDeleteBin6Line } from "react-icons/ri";
-import { useCookies } from 'react-cookie';
 
 const Cart = () => {
   const [cartItems, setCartItems] = useState([]); 
   const [checkout, setCheckout] = useState('')
   const [userId, setUserId] = useState('');
-  const [cookie, setCookie] = useCookies(['token']);
 
+  const BASE_URL =  import.meta.env.VITE_BASE_URL 
   const navigate = useNavigate()  
-
   
-
   const fetchUserCart = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/auth/verify-token", { withCredentials: true });
+      const res = await axios.get(`${BASE_URL}/auth/verify-token`, { withCredentials: true });
       setCartItems(res.data.user.cart);       
       setUserId(res.data.user._id);
     } catch (error) {
@@ -27,7 +24,7 @@ const Cart = () => {
 
   const handleDeleteItem = async (id) => {
     try {
-      await axios.delete(`http://localhost:3000/products/delete-cart-items/${id}`, { withCredentials: true });
+      await axios.delete(`${BASE_URL}/products/delete-cart-items/${id}`, { withCredentials: true });
       fetchUserCart(); 
     } catch (error) {
       console.error("Error deleting item:", error);
@@ -36,7 +33,7 @@ const Cart = () => {
 
   const updateQuantity = async (id, quantity) => {
     try {
-      await axios.patch(`http://localhost:3000/products/update-cart/${id}`, { quantity }, { withCredentials: true });
+      await axios.patch(`${BASE_URL}/products/update-cart/${id}`, { quantity }, { withCredentials: true });
     } catch (error) {
       console.error("Error updating quantity:", error);
     }

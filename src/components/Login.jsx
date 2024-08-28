@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { Link, Route, Routes } from "react-router-dom";
-import Email from "./Email";
 import SignIn from "./SignIn";
 import { useCookies } from "react-cookie";
 import Navbar from "./Navbar";
@@ -19,7 +18,6 @@ const Login = () => {
     {!cookie.access_token && 
       <Routes>
         <Route path="/" element={<SignIn />} />
-        <Route path="/email" element={<Email />} />
       </Routes>
     }
  
