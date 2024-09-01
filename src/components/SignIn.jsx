@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import Password from './Password';
 import Navbar from './Navbar';
@@ -12,14 +12,18 @@ const SignIn = () => {
     const [email, setEmail] = useState("");
     const [password, setPassowrd] = useState("");
     const [cookie, setCookie, removeCookie] = useCookies("")
+    const [user, setUser] = useState("")
 
     console.log(email, password);
-    
-    
-    
+        
     const BASE_URL =  import.meta.env.VITE_BASE_URL 
     console.log(BASE_URL);
     const navigate = useNavigate();  
+
+    const getUser = async () => {
+      const res = await axios.get(`${BASE_URL}/auth/verify-token`, { withCredentials: true });
+      setUser(res.data.user)    
+    }
 
     const login = async (e) => {
       e.preventDefault();
@@ -42,14 +46,18 @@ const SignIn = () => {
     }
   }
 
-  
+  useEffect(() => {
+    getUser()
+  },[])
+
+const isUser = user._id
 
   return (
     <>
 
     <Navbar />
 
-    {!cookie.token &&
+    {!isUser &&
      <section className="pt-14 flex flex-col items-center">
         <h1 className="text-center text-2xl md:text-3xl font-serif mt-4">Login</h1>
 
@@ -90,8 +98,6 @@ const SignIn = () => {
 
       </section>
     }
-
-    {/* <Account/> */}
     
     </>
   )

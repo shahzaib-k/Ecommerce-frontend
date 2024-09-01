@@ -10,6 +10,7 @@ const ProductCard = ({items}) => {
   const [addedToCart, setAddedToCart] = useState(false);
   const [cookie, setCookie] = useCookies('')
   const [userId, setUserId] = useState('')
+  const [user, setUser] = useState('')
 
   const BASE_URL =  import.meta.env.VITE_BASE_URL 
 
@@ -24,6 +25,7 @@ const ProductCard = ({items}) => {
   const token = async () => {
     const res = await axios.get(`${BASE_URL}/auth/verify-token`, {withCredentials: true})
     setUserId(res.data.user._id)
+    setUser(res.data.user)
   }
   
 
@@ -42,6 +44,7 @@ const ProductCard = ({items}) => {
     token()
   }, [])
 
+  const isUser = user._id
 
   return (
     <>
@@ -62,7 +65,7 @@ const ProductCard = ({items}) => {
           </div>
           <span className="absolute left-2 bottom-2 text-gray-700">${items.price}</span>
 
-    { cookie.token && 
+    { isUser && 
         <div onClick={() => {handleAnimation(); 
         handleAddToCart(items._id, items.title, items.color, items.image, items.size, items.price)}}
         className={`absolute left-0 bottom-0 w-full z-[50] bg-green-500 text-white font-semibold uppercase text-center py-2 transition-opacity ${hovered ? 'opacity-100' : 'opacity-0'}`}>

@@ -80,6 +80,8 @@ const Cart = () => {
         const res = await axios.post(`${BASE_URL}/products/checkout`, {id, title, price, quantity, size, image}, 
           { withCredentials: true } )
         setCheckout(res.data.url);
+        console.log(res.data.url);
+        
       }      
     } catch (error) {
       console.log(error);

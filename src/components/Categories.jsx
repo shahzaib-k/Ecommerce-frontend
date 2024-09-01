@@ -7,7 +7,6 @@ import "slick-carousel/slick/slick-theme.css";
 
 const Categories = () => {
 
-
   const settings = {
     accessibility:true,
     dots: true,

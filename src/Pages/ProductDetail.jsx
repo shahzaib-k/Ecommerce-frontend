@@ -13,6 +13,8 @@ const ProductDetail = () => {
 
     const [data, setData] = useState([])
     const [userId, setUserId] = useState('')
+    const [admin, setAdmin] = useState("")
+    const [user, setUser] = useState('')
     const [cookie, setCookie] = useCookies('')
 
     const BASE_URL =  import.meta.env.VITE_BASE_URL 
@@ -26,15 +28,23 @@ const ProductDetail = () => {
       }
     }
 
+    const getAdmin = async () => {
+      const res = await axios.get(`${BASE_URL}/admin/verify-token`, { withCredentials: true });
+      setAdmin(res.data.user)    
+    }
+
     const token = async () => {
 
          const res = await axios.get(`${BASE_URL}/auth/verify-token`, {withCredentials: true})
-        setUserId(res.data.user._id)
+        setUserId(res.data.user._id)    
+        setUser(res.data.user)  
       }
+
+      const isUser = user._id
 
     const handleAddToCart = async (id, title, color, image, size, price) => {
       try {
-        if(!cookie.token){
+        if(!isUser){
           return toast.error("Please Login first");
         }
         const res = await axios.post(`${BASE_URL}/products/add-to-cart/${userId}` , 
@@ -63,11 +73,14 @@ const ProductDetail = () => {
     useEffect(() => {
       getProducts()
       token()
+      getAdmin()
     }, [])
 
     if(data.length == 0){
       return <Loader/>
     }
+
+    const isAdmin = admin._id
 
   return (
     <>
@@ -103,7 +116,7 @@ const ProductDetail = () => {
                             </span>
 
                           {
-                            cookie.access_token ? ( 
+                            isAdmin ? ( 
                               <button  onClick={() => {handleDelete(items._id)}} 
                               className='w-[70vw] md:w-[400px] bg-black text-white h-8 mb-5' >Delete</button>
                             ):(

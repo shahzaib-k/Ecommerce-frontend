@@ -10,8 +10,10 @@ const Navbar = () => {
 
   const [cookie, setCookie, removeCookie] = useCookies("")
   const [user, setUser] = useState('')
+  const [admin, setAdmin] = useState('')
   const [cartItems, setCartItems] = useState([]); 
   const [isOverlayVisible, setOverlayVisible] = useState(false);
+
   
   const BASE_URL =  import.meta.env.VITE_BASE_URL 
   const navigate = useNavigate()
@@ -27,8 +29,15 @@ const Navbar = () => {
     }
   };
 
+  const getAdmin = async () => {
+    const res = await axios.get(`${BASE_URL}/admin/verify-token`, { withCredentials: true });
+    setAdmin(res.data.user)    
+  }
+
+
   useEffect(() => {
     fetchUserCart();
+    getAdmin()
   }, [], );           //[fetchUserCart]
 
 
@@ -42,6 +51,9 @@ const Navbar = () => {
     navigate('/auth')
   }
 
+  const isUser = user._id
+  const isAdmin = admin._id
+
 
   return (
     <>
@@ -51,7 +63,7 @@ const Navbar = () => {
         <h1 className='md:text-lg md:font-semibold' >Squirrel's Stash.</h1>
 
         <section className='flex' >
-           { !cookie.access_token &&
+           { !isAdmin &&
             <Link to="/cart">
             <span className=' text-center flex items-center justify-center top-0.5 left-70 ml-2 w-4 h-4 rounded-full 
             bg-red-400 absolute text-sm' >{cartItems.length}</span>
@@ -65,10 +77,10 @@ const Navbar = () => {
             {isOverlayVisible && (
               <div className='w-52 absolute top-10 right-2 p-3 bg-white z-50 rounded-sm border border-gray-600 shadow-sm shadow-gray-400' >
               {
-                  cookie.token ? (
+                  isUser ? (
                   <p>Welcome, <span className='font-semibold' >{user.name}</span></p>
                   ):(
-                    cookie.access_token ? (
+                    isAdmin ? (
                   <p>Admin Account</p>
                     ):(
                   <p>Account Information</p>)
@@ -76,16 +88,15 @@ const Navbar = () => {
               }
 
                 {
-                 cookie.token && 
+                 isUser && 
                  <>
-
                   <Link to="/orders" className='hover:border-b hover:border-black' >Active Orders</Link>
                 
                 <br />
                  </>
                 }  
                 {
-                  cookie.token || cookie.access_token ? (
+                  isUser || isAdmin ? (
                   <button onClick={logout} className='text-red-500 hover:border-b hover:border-red-500 ' >Logout</button>
                   ):(
                     <Link to="/auth" className='text-green-500 hover:border-b hover:border-green-500 ' >Login</Link>

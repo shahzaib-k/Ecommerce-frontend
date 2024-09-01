@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, Route, Routes } from "react-router-dom";
 import SignIn from "./SignIn";
 import { useCookies } from "react-cookie";
@@ -7,22 +7,34 @@ import Navbar from "./Navbar";
 const Login = () => {
  
   const [cookie, setCookie , removeCookie] = useCookies("")
+  const [admin, setAdmin] = useState("")
 
   const logout = () => {
     removeCookie("access_token")
     navigate("/")
   }
 
+  const getAdmin = async () => {
+    const res = await axios.get(`${BASE_URL}/admin/verify-token`, { withCredentials: true });
+    setAdmin(res.data.user)
+  }
+
+  useEffect(() => { 
+    getAdmin()
+  }, []);
+
+const isAdmin = admin._id
+
   return (
     <>
-    {!cookie.access_token && 
+    {!isAdmin && 
       <Routes>
         <Route path="/" element={<SignIn />} />
       </Routes>
     }
  
     {
-      cookie.access_token &&
+      isAdmin &&
       <>
       <Navbar/>
 

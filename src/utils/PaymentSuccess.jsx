@@ -8,10 +8,13 @@ const PaymentSuccess = () => {
   const params =  useParams()
   console.log(params);
   
+  const BASE_URL =  import.meta.env.VITE_BASE_URL 
+  console.log(BASE_URL);
+  
 
   const success = async () => {
     try {
-      const res =  await axios.get('http://localhost:3000/products/complete')
+      const res =  await axios.get(`${BASE_URL}/products/complete`)
       console.log(res);
       
     } catch (error) {
