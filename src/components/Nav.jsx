@@ -12,14 +12,16 @@ import { ImCross } from "react-icons/im";
 const Nav = () => {
   const [cookie, setCookie, removeCookie] = useCookies('');
   const [cartItems, setCartItems] = useState([]); 
-  const [user, setUser] = useState('')
+  // const [user, setUser] = useState({})
+  // const [admin, setAdmin] = useState({})
   const [admin, setAdmin] = useState('')
+  const [user, setUser] = useState('')
   const [isOverlayVisible, setOverlayVisible] = useState(false);
   const [active, setActive] = useState(false)
   const BASE_URL =  import.meta.env.VITE_BASE_URL 
   const location = useLocation()
   const navigate = useNavigate()
-  
+    
   const fetchUserCart = async () => {
     try {
       const res = await axios.get(`${BASE_URL}/auth/verify-token`, { withCredentials: true });
@@ -32,8 +34,14 @@ const Nav = () => {
 
   const getAdmin = async () => {
     const res = await axios.get(`${BASE_URL}/admin/verify-token`, { withCredentials: true });
+    // console.log("admin", res.data);
     setAdmin(res.data.user)    
   }
+
+  const logout = async () => {
+    await axios.get(`${BASE_URL}/auth/logout`, {withCredentials: true} )
+  }
+
 
   useEffect(() => {
     fetchUserCart();  
@@ -41,8 +49,8 @@ const Nav = () => {
   }, []);
 
   const isUser = user._id
-const isAdmin = admin._id
-  console.log(isAdmin);
+  const isAdmin = admin._id
+  // console.log("-------admin-------------", isAdmin);
   
 
   const data = [
@@ -58,11 +66,11 @@ const isAdmin = admin._id
     setOverlayVisible(!isOverlayVisible);
   };
 
-  const logout = () => {
-    removeCookie("token")
-    removeCookie("access_token")
-    navigate("/auth")    
-  }
+  // const logout = () => {
+  //   removeCookie("token")
+  //   removeCookie("access_token")
+  //   navigate("/auth")    
+  // }
 
   return (
     <>
