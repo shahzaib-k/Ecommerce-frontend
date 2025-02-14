@@ -7,7 +7,9 @@ import Navbar from "./Navbar";
 const Login = () => {
  
   const [cookie, setCookie , removeCookie] = useCookies("")
-  const [admin, setAdmin] = useState("")
+  const [admin, setAdmin] = useState('')
+  const BASE_URL =  import.meta.env.VITE_BASE_URL 
+
 
   const logout = () => {
     removeCookie("access_token")

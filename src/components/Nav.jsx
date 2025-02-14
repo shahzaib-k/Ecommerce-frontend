@@ -12,8 +12,6 @@ import { ImCross } from "react-icons/im";
 const Nav = () => {
   const [cookie, setCookie, removeCookie] = useCookies('');
   const [cartItems, setCartItems] = useState([]); 
-  // const [user, setUser] = useState({})
-  // const [admin, setAdmin] = useState({})
   const [admin, setAdmin] = useState('')
   const [user, setUser] = useState('')
   const [isOverlayVisible, setOverlayVisible] = useState(false);
@@ -40,6 +38,10 @@ const Nav = () => {
 
   const logout = async () => {
     await axios.get(`${BASE_URL}/auth/logout`, {withCredentials: true} )
+    removeCookie("token"); 
+    setUser(""); 
+    setAdmin(""); 
+    navigate("/auth")
   }
 
 
@@ -163,7 +165,7 @@ const Nav = () => {
                
                 {
                   isUser || isAdmin ? (
-                  <button onClick={logout} className='text-red-500 hover:border-b hover:border-red-500 ' >Logout</button>
+                    <button onClick={logout} className='text-red-500 hover:border-b hover:border-red-500 ' >Logout</button>
                   ):(
                     <Link to="/auth" className='text-green-500 hover:border-b hover:border-green-500 ' >Login</Link>
                   )
