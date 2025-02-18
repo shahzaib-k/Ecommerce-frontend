@@ -15,7 +15,7 @@ const Men = () => {
     const getProducts = async () => {
         try {
             const res = await axios.get(`${BASE_URL}/products/get-products`, { withCredentials: true })
-            setData(res?.data?.product || [])
+            setData(res?.data?.product)            
           
         } catch (error) {
             console.error("Error fetching products:", error);
@@ -28,7 +28,11 @@ const Men = () => {
 
     
       if(data.length == 0){
-        return <Loader/>
+        
+        return <>
+          <Loader/>
+         </> 
+          
       }
     
 

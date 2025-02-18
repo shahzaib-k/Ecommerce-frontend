@@ -54,13 +54,16 @@ const Navbar = () => {
   const isUser = user._id
   const isAdmin = admin._id
 
+  const home = () =>{
+    navigate('/')
+  }
 
   return (
     <>
       
       <main className='max-w-screen  h-12 flex justify-between items-center px-8 md:px-32 bg-gray-200 bg-opacity-10 ' >
 
-        <h1 className='md:text-lg md:font-semibold' >Squirrel's Stash.</h1>
+        <button onClick={home} className='md:text-lg  md:font-semibold' >Squirrel's Stash.</button>
 
         <section className='flex' >
            { !isAdmin &&

@@ -14,6 +14,9 @@ const Nav = () => {
   const [cartItems, setCartItems] = useState([]); 
   const [admin, setAdmin] = useState('')
   const [user, setUser] = useState('')
+  // const [admin, setAdmin] = useState({})
+  // const [user, setUser] = useState({})
+  
   const [isOverlayVisible, setOverlayVisible] = useState(false);
   const [active, setActive] = useState(false)
   const BASE_URL =  import.meta.env.VITE_BASE_URL 
@@ -32,7 +35,6 @@ const Nav = () => {
 
   const getAdmin = async () => {
     const res = await axios.get(`${BASE_URL}/admin/verify-token`, { withCredentials: true });
-    // console.log("admin", res.data);
     setAdmin(res.data.user)    
   }
 
@@ -50,9 +52,9 @@ const Nav = () => {
     getAdmin()
   }, []);
 
+
   const isUser = user._id
   const isAdmin = admin._id
-  // console.log("-------admin-------------", isAdmin);
   
 
   const data = [
@@ -68,11 +70,9 @@ const Nav = () => {
     setOverlayVisible(!isOverlayVisible);
   };
 
-  // const logout = () => {
-  //   removeCookie("token")
-  //   removeCookie("access_token")
-  //   navigate("/auth")    
-  // }
+const home =() =>{
+  navigate("/")
+}
 
   return (
     <>
@@ -94,7 +94,7 @@ const Nav = () => {
 
             {isUser || isAdmin ? 
             (
-            <Link to="/auth " className="text-2xl " >Logout</Link>              
+            <button onClick={logout} className="text-2xl " >Logout</button>              
             ):(
             <Link to="/login " className="text-2xl" >Login</Link>
             )
@@ -108,7 +108,7 @@ const Nav = () => {
     <section className={`${location.pathname === "/" ? 'bg-[#cccece] md:shadow-md md:shadow-gray-800' : 'bg-gray-200' } max-w-screen
     flex justify-between items-center md:justify-around px-10 h-12 absolute inset-0 z-[1] pt-1  bg-opacity-40 `}>
      
-      <div className={`${location.pathname === "/" ? "text-white" : "text-black" }  text-2xl`}>Squirrel's Stash</div>
+      <button onClick={home} className={`${location.pathname === "/" ? "text-white" : "text-black" }  text-2xl`}>Squirrel's Stash</button>
 
       <div className={`hidden md:flex ${location.pathname === "/" ? "text-white" : "text-black" } `}>
         {data.map((item) => (
